@@ -2684,6 +2684,17 @@
       const menuToggle = document.querySelector(".menu-toggle");
       const mobileMenu = document.getElementById("mobile-menu");
 
+      const alignInitialSection = () => {
+        if (!window.location.hash) return;
+        const target = document.querySelector(window.location.hash);
+        if (!target) return;
+        root.style.scrollBehavior = "auto";
+        target.scrollIntoView({ behavior: "auto", block: "start" });
+        root.style.removeProperty("scroll-behavior");
+      };
+
+      window.addEventListener("load", alignInitialSection, { once: true });
+
       const closeMenu = () => {
         mobileMenu.classList.remove("is-open");
         document.body.classList.remove("menu-open");
