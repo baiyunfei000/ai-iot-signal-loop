@@ -20,6 +20,8 @@
       --ink: #f1f0e8;
       --muted: #a6a99e;
       --accent: #c9ff3d;
+      --accent-cool: #67e8ff;
+      --accent-warm: #ffb15c;
       --accent-ink: #0a0c06;
       --max: 1540px;
       --gutter: clamp(20px, 4vw, 64px);
@@ -48,6 +50,21 @@
       font-size: 18px;
       line-height: 1.55;
       overflow-x: hidden;
+    }
+
+    .ambient-void {
+      position: fixed;
+      z-index: 0;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      background: var(--ground);
+    }
+
+    #ambientCanvas {
+      width: 100%;
+      height: 100%;
+      opacity: .8;
     }
 
     body.menu-open {
@@ -319,6 +336,7 @@
 
     main {
       position: relative;
+      z-index: 1;
     }
 
     .page {
@@ -328,6 +346,7 @@
       scroll-snap-align: start;
       scroll-margin-top: 72px;
       overflow: clip;
+      background: rgba(5, 5, 5, .82);
     }
 
     .page-inner {
@@ -336,7 +355,7 @@
     }
 
     .page:nth-child(even) {
-      background: var(--panel);
+      background: rgba(16, 17, 15, .88);
     }
 
     .display-xl {
@@ -399,6 +418,7 @@
       padding-top: 96px;
       padding-bottom: 48px;
       isolation: isolate;
+      background: rgba(5, 5, 5, .55);
     }
 
     #heroCanvas {
@@ -500,10 +520,12 @@
       width: min(62vw, 920px);
       aspect-ratio: 1;
       transform: translateX(18%);
+      isolation: isolate;
     }
 
     .hero-ring {
       position: absolute;
+      z-index: 1;
       inset: 0;
       width: 100%;
       height: 100%;
@@ -521,7 +543,7 @@
 
     .hero-ring .ring-echo {
       fill: none;
-      stroke: var(--ink);
+      stroke: var(--accent-cool);
       stroke-width: 10;
       stroke-dasharray: 5 39;
       stroke-linecap: round;
@@ -536,6 +558,7 @@
 
     .hero-signal-label {
       position: absolute;
+      z-index: 4;
       top: 13%;
       left: 2%;
       width: 180px;
@@ -547,6 +570,102 @@
       font-weight: 700;
       line-height: 1.05;
       transform: rotate(-6deg);
+    }
+
+    .robot-arm {
+      position: absolute;
+      z-index: 3;
+      right: -2%;
+      bottom: -2%;
+      width: 78%;
+      height: 84%;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .robot-arm .arm-strut {
+      fill: #111714;
+      stroke: #536259;
+      stroke-width: 3;
+    }
+
+    .robot-arm .arm-strut-inner {
+      fill: none;
+      stroke: rgba(103, 232, 255, .5);
+      stroke-width: 2;
+    }
+
+    .robot-arm .arm-joint {
+      fill: #202821;
+      stroke: var(--accent);
+      stroke-width: 4;
+    }
+
+    .robot-arm .arm-joint-cool {
+      fill: #10191b;
+      stroke: var(--accent-cool);
+      stroke-width: 3;
+    }
+
+    .robot-arm .arm-base {
+      fill: #111714;
+      stroke: #48534b;
+      stroke-width: 3;
+    }
+
+    .robot-arm .gripper {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 8;
+      stroke-linecap: round;
+    }
+
+    .robot-arm .arm-beam {
+      fill: rgba(103, 232, 255, .09);
+      animation: beamPulse 3.6s var(--curve) infinite;
+    }
+
+    .robot-arm .arm-sensor {
+      fill: var(--accent-cool);
+      animation: sensorBlink 2.2s var(--curve) infinite;
+    }
+
+    .arm-shoulder {
+      transform-origin: 250px 466px;
+      animation: armShoulder 9s var(--curve) infinite alternate;
+    }
+
+    .arm-elbow {
+      transform-origin: 176px 302px;
+      animation: armElbow 7.2s var(--curve) infinite alternate;
+    }
+
+    .arm-wrist {
+      transform-origin: 334px 226px;
+      animation: armWrist 5.6s var(--curve) infinite alternate;
+    }
+
+    .arm-grip-left {
+      transform-origin: 388px 118px;
+      animation: gripLeft 3.2s var(--curve) infinite alternate;
+    }
+
+    .arm-grip-right {
+      transform-origin: 422px 112px;
+      animation: gripRight 3.2s var(--curve) infinite alternate;
+    }
+
+    .hero-era {
+      position: absolute;
+      z-index: 5;
+      top: 22%;
+      right: 5%;
+      color: var(--accent-cool);
+      font-family: var(--display);
+      font-size: 14px;
+      font-weight: 500;
+      writing-mode: vertical-rl;
+      opacity: .78;
     }
 
     .hero-ticker {
@@ -578,7 +697,7 @@
     .manifesto-page {
       display: grid;
       align-content: center;
-      background: var(--panel-2);
+      background: rgba(24, 26, 22, .82);
     }
 
     .manifesto-layout {
@@ -854,7 +973,7 @@
     .loop-page {
       display: grid;
       align-content: center;
-      background: var(--panel-2);
+      background: rgba(24, 26, 22, .86);
     }
 
     .loop-head {
@@ -1101,7 +1220,7 @@
     }
 
     .edge-page {
-      background: var(--panel-2);
+      background: rgba(24, 26, 22, .87);
     }
 
     .edge-layout {
@@ -1441,6 +1560,7 @@
       min-height: 620px;
       display: grid;
       place-items: center;
+      isolation: isolate;
     }
 
     .future-photo {
@@ -1463,10 +1583,9 @@
     }
 
     .future-caption {
-      position: absolute;
-      right: 0;
-      bottom: 12%;
-      max-width: 260px;
+      position: relative;
+      max-width: 360px;
+      margin-top: 24px;
       padding: 18px;
       color: var(--accent-ink);
       background: var(--accent);
@@ -1493,14 +1612,44 @@
 
     .future-ticker-track span::after {
       content: " →";
-      color: var(--accent);
+      color: var(--accent-cool);
+    }
+
+    .future-drone {
+      position: absolute;
+      z-index: 4;
+      top: 8%;
+      right: 1%;
+      width: min(16vw, 190px);
+      height: auto;
+      animation: droneHover 6s var(--curve) infinite alternate;
+    }
+
+    .future-drone .drone-shell {
+      fill: #17201c;
+      stroke: var(--accent);
+      stroke-width: 2;
+    }
+
+    .future-drone .drone-core {
+      fill: var(--accent-cool);
+      animation: sensorBlink 2.8s var(--curve) infinite;
+    }
+
+    .future-drone .drone-orbit {
+      fill: none;
+      stroke: var(--accent-cool);
+      stroke-width: 2;
+      stroke-dasharray: 8 12;
+      transform-origin: center;
+      animation: orbitSpin 12s linear infinite;
     }
 
     .closing-page {
       min-height: 100svh;
       display: grid;
       align-items: center;
-      background: var(--panel-2);
+      background: rgba(24, 26, 22, .82);
     }
 
     .closing-layout {
@@ -1631,6 +1780,46 @@
       to { transform: rotate(360deg); }
     }
 
+    @keyframes armShoulder {
+      from { transform: rotate(-10deg); }
+      to { transform: rotate(13deg); }
+    }
+
+    @keyframes armElbow {
+      from { transform: rotate(-8deg); }
+      to { transform: rotate(24deg); }
+    }
+
+    @keyframes armWrist {
+      from { transform: rotate(-20deg); }
+      to { transform: rotate(16deg); }
+    }
+
+    @keyframes gripLeft {
+      from { transform: rotate(7deg); }
+      to { transform: rotate(-11deg); }
+    }
+
+    @keyframes gripRight {
+      from { transform: rotate(-7deg); }
+      to { transform: rotate(11deg); }
+    }
+
+    @keyframes beamPulse {
+      0%, 100% { opacity: .06; }
+      50% { opacity: .2; }
+    }
+
+    @keyframes sensorBlink {
+      0%, 100% { opacity: .5; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes droneHover {
+      from { transform: translateY(-8px) rotate(-5deg); }
+      to { transform: translateY(14px) rotate(7deg); }
+    }
+
     @keyframes orbitSpin {
       to { transform: rotate(360deg); }
     }
@@ -1729,6 +1918,16 @@
         width: min(110vw, 760px);
         opacity: .44;
         transform: none;
+      }
+
+      .robot-arm {
+        right: -12%;
+        width: 86%;
+        opacity: .34;
+      }
+
+      .hero-era {
+        display: none;
       }
 
       .hero-support {
@@ -1867,6 +2066,17 @@
 
       .hero-signal-label {
         display: none;
+      }
+
+      .robot-arm {
+        opacity: .22;
+      }
+
+      .future-drone {
+        width: 28vw;
+        top: 2%;
+        right: -4%;
+        opacity: .72;
       }
 
       .hero-ticker {
@@ -2023,9 +2233,7 @@
       }
 
       .future-caption {
-        right: 0;
-        bottom: 0;
-        max-width: 210px;
+        max-width: 100%;
         font-size: 14px;
       }
 
@@ -2063,6 +2271,9 @@
 </head>
 <body>
   <a class="skip-link" href="#main">跳到正文</a>
+  <div class="ambient-void" aria-hidden="true">
+    <canvas id="ambientCanvas"></canvas>
+  </div>
 
   <header class="site-nav" aria-label="主导航">
     <a class="brand" href="#cover" aria-label="返回页面顶部">
@@ -2133,7 +2344,37 @@
             <circle class="ring-base" cx="450" cy="450" r="330"></circle>
             <circle class="ring-core" cx="450" cy="450" r="154"></circle>
           </svg>
+          <svg class="robot-arm" viewBox="0 0 500 620">
+            <ellipse class="arm-base" cx="250" cy="552" rx="150" ry="28"></ellipse>
+            <rect class="arm-base" x="206" y="500" width="88" height="58" rx="18"></rect>
+            <path class="arm-beam" d="M406 91 L486 -20 L500 190 Z"></path>
+            <g class="arm-shoulder">
+              <path class="arm-strut" d="M248 478 L164 318 L214 294 L294 456 Z"></path>
+              <path class="arm-strut-inner" d="M244 454 L188 332 M231 466 L176 318"></path>
+              <circle class="arm-joint" cx="250" cy="466" r="34"></circle>
+              <circle class="arm-joint-cool" cx="250" cy="466" r="15"></circle>
+              <g class="arm-elbow">
+                <path class="arm-strut" d="M166 312 L316 230 L340 268 L188 350 Z"></path>
+                <path class="arm-strut-inner" d="M188 318 L310 248 M177 335 L328 254"></path>
+                <circle class="arm-joint" cx="176" cy="302" r="30"></circle>
+                <circle class="arm-joint-cool" cx="176" cy="302" r="13"></circle>
+                <g class="arm-wrist">
+                  <path class="arm-strut" d="M326 234 L396 134 L434 158 L358 258 Z"></path>
+                  <path class="arm-strut-inner" d="M348 224 L402 156 M333 246 L420 150"></path>
+                  <circle class="arm-joint" cx="334" cy="226" r="27"></circle>
+                  <circle class="arm-joint-cool" cx="334" cy="226" r="11"></circle>
+                  <g>
+                    <path class="gripper arm-grip-left" d="M398 136 L382 92 L372 64"></path>
+                    <path class="gripper arm-grip-right" d="M428 132 L450 94 L460 68"></path>
+                    <rect class="arm-base" x="393" y="119" width="45" height="30" rx="14" transform="rotate(26 415 134)"></rect>
+                    <circle class="arm-sensor" cx="414" cy="78" r="7"></circle>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
           <div class="hero-signal-label">数据进入<br>判断返回</div>
+          <span class="hero-era">FUTURE EPOCH · CONTROL NODE</span>
         </div>
       </div>
 
@@ -2378,6 +2619,14 @@
 
         <div class="future-visual reveal" style="--delay: 120ms">
           <div class="future-ring" aria-hidden="true"></div>
+          <svg class="future-drone" viewBox="0 0 180 180" aria-hidden="true">
+            <circle class="drone-orbit" cx="90" cy="90" r="76"></circle>
+            <path class="drone-shell" d="M55 92 L28 71 L22 79 L47 103 L69 108 Z"></path>
+            <path class="drone-shell" d="M125 92 L152 71 L158 79 L133 103 L111 108 Z"></path>
+            <path class="drone-shell" d="M73 67 L107 67 L119 95 L103 119 L77 119 L61 95 Z"></path>
+            <circle class="drone-core" cx="90" cy="96" r="10"></circle>
+            <path class="drone-shell" d="M79 58 Q90 45 101 58 L97 69 L83 69 Z"></path>
+          </svg>
           <img class="future-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/STS-114_Steve_Robinson_on_Canadarm2.jpg/1920px-STS-114_Steve_Robinson_on_Canadarm2.jpg" width="1920" height="1266" alt="宇航员固定在 Canadarm2 机械臂上执行舱外任务，用于说明远程感知与控制" loading="lazy" decoding="async">
         </div>
       </div>
@@ -2867,8 +3116,134 @@
       });
       startFutureTimer();
 
+      const ambientCanvas = document.getElementById("ambientCanvas");
+      const ambientContext = ambientCanvas.getContext("2d");
+      let ambientStars = [];
+      let ambientWidth = 0;
+      let ambientHeight = 0;
+      let ambientDpr = 1;
+      let ambientFrame = null;
+      let ambientLastFrame = 0;
+
+      const createAmbientField = () => {
+        const count = Math.max(34, Math.min(92, Math.round(ambientWidth / 18)));
+        ambientStars = Array.from({ length: count }, (_, index) => ({
+          x: Math.random(),
+          y: Math.random(),
+          size: Math.random() * 1.8 + 0.45,
+          depth: Math.random() * 0.9 + 0.15,
+          speed: Math.random() * 0.000018 + 0.000004,
+          phase: Math.random() * Math.PI * 2,
+          cool: index % 7 === 0,
+          warm: index % 19 === 0
+        }));
+      };
+
+      const resizeAmbientCanvas = () => {
+        const rect = ambientCanvas.getBoundingClientRect();
+        ambientWidth = rect.width;
+        ambientHeight = rect.height;
+        ambientDpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        ambientCanvas.width = Math.round(ambientWidth * ambientDpr);
+        ambientCanvas.height = Math.round(ambientHeight * ambientDpr);
+        ambientContext.setTransform(ambientDpr, 0, 0, ambientDpr, 0, 0);
+        createAmbientField();
+        if (isReduced()) drawAmbientField(0);
+      };
+
+      const drawAmbientField = (time) => {
+        ambientContext.clearRect(0, 0, ambientWidth, ambientHeight);
+        ambientContext.save();
+        ambientContext.globalCompositeOperation = "screen";
+
+        const scrollOffset = window.scrollY * 0.018;
+        const positions = ambientStars.map((star, index) => {
+          const driftX = Math.sin(time * star.speed * 12 + star.phase) * (7 + star.depth * 10);
+          const x = star.x * ambientWidth + driftX;
+          const y = (star.y * ambientHeight + scrollOffset * star.depth + Math.cos(time * star.speed * 9 + star.phase) * 5) % (ambientHeight + 30);
+          const normalizedY = y < 0 ? y + ambientHeight + 30 : y;
+
+          ambientContext.beginPath();
+          ambientContext.arc(x, normalizedY, star.size, 0, Math.PI * 2);
+          ambientContext.fillStyle = star.cool
+            ? "rgba(103,232,255,.58)"
+            : star.warm
+              ? "rgba(255,177,92,.42)"
+              : "rgba(241,240,232,.24)";
+          ambientContext.fill();
+          return { x, y: normalizedY, index };
+        });
+
+        for (let index = 0; index < Math.min(positions.length, 28); index += 1) {
+          const current = positions[index];
+          positions.slice(index + 1, index + 6).forEach((next) => {
+            const distance = Math.hypot(current.x - next.x, current.y - next.y);
+            if (distance > 138) return;
+            ambientContext.beginPath();
+            ambientContext.moveTo(current.x, current.y);
+            ambientContext.lineTo(next.x, next.y);
+            ambientContext.strokeStyle = `rgba(103,232,255,${(1 - distance / 138) * 0.065})`;
+            ambientContext.lineWidth = 1;
+            ambientContext.stroke();
+          });
+        }
+
+        const orbitX = ambientWidth * (innerWidth < 720 ? 0.58 : 0.76);
+        const orbitY = ambientHeight * 0.38;
+        ambientContext.lineWidth = 1.2;
+        ambientContext.strokeStyle = "rgba(103,232,255,.11)";
+        for (let orbit = 0; orbit < 3; orbit += 1) {
+          ambientContext.beginPath();
+          ambientContext.ellipse(
+            orbitX,
+            orbitY,
+            ambientWidth * (0.19 + orbit * 0.075),
+            ambientHeight * (0.11 + orbit * 0.055),
+            -0.28 + orbit * 0.11,
+            0,
+            Math.PI * 2
+          );
+          ambientContext.stroke();
+        }
+
+        const sweepAngle = time * 0.00012;
+        ambientContext.beginPath();
+        ambientContext.moveTo(orbitX, orbitY);
+        ambientContext.lineTo(
+          orbitX + Math.cos(sweepAngle) * ambientWidth * 0.36,
+          orbitY + Math.sin(sweepAngle) * ambientHeight * 0.25
+        );
+        ambientContext.strokeStyle = "rgba(201,255,61,.12)";
+        ambientContext.lineWidth = 2;
+        ambientContext.stroke();
+        ambientContext.restore();
+      };
+
+      const animateAmbientField = (time) => {
+        if (!ambientLastFrame || time - ambientLastFrame > 36) {
+          drawAmbientField(time);
+          ambientLastFrame = time;
+        }
+        ambientFrame = requestAnimationFrame(animateAmbientField);
+      };
+
+      const stopAmbientField = () => {
+        if (ambientFrame) cancelAnimationFrame(ambientFrame);
+        ambientFrame = null;
+      };
+
+      const refreshAmbientField = () => {
+        stopAmbientField();
+        if (isReduced()) {
+          drawAmbientField(0);
+        } else if (!document.hidden) {
+          ambientFrame = requestAnimationFrame(animateAmbientField);
+        }
+      };
+
       const canvas = document.getElementById("heroCanvas");
       const context = canvas.getContext("2d");
+      const robotArm = document.querySelector(".robot-arm");
       const pointer = { x: 0, y: 0, targetX: 0, targetY: 0 };
       let particles = [];
       let canvasWidth = 0;
@@ -2958,6 +3333,7 @@
 
       const refreshMotion = () => {
         stopCanvas();
+        refreshAmbientField();
         if (isReduced()) {
           drawCanvas(0);
         } else if (!document.hidden) {
@@ -2966,6 +3342,7 @@
       };
 
       window.addEventListener("resize", resizeCanvas, { passive: true });
+      window.addEventListener("resize", resizeAmbientCanvas, { passive: true });
       document.addEventListener("visibilitychange", refreshMotion);
       reducedMotion.addEventListener("change", refreshMotion);
 
@@ -2973,12 +3350,17 @@
         const rect = event.currentTarget.getBoundingClientRect();
         pointer.targetX = ((event.clientX - rect.left) / rect.width - 0.5) * 18;
         pointer.targetY = ((event.clientY - rect.top) / rect.height - 0.5) * 18;
+        if (!isReduced()) {
+          robotArm.style.transform = `translate3d(${pointer.targetX * 0.55}px, ${pointer.targetY * 0.35}px, 0)`;
+        }
       });
       document.getElementById("cover").addEventListener("pointerleave", () => {
         pointer.targetX = 0;
         pointer.targetY = 0;
+        if (!isReduced()) robotArm.style.transform = "translate3d(0,0,0)";
       });
 
+      resizeAmbientCanvas();
       resizeCanvas();
       refreshMotion();
     })();
