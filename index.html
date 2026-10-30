@@ -3,26 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#050505">
+  <meta name="theme-color" content="#02040a">
   <meta name="description" content="人工智能与物联网工程的关系：从传感器、数据分析到边缘推理与物理行动的技术科普长页。">
   <meta property="og:title" content="万物感知，智能发生 | AI × IoT">
   <meta property="og:description" content="从信号到判断，从判断到行动。用十个动态章节理解人工智能与物联网工程的闭环关系。">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/sts-114-steve-robinson-on-canadarm2.jpg">
+  <meta property="og:image" content="https://baiyunfei000.github.io/ai-iot-signal-loop/cyberpunk-bg-desktop.png">
   <title>万物感知，智能发生 | AI × IoT</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23050505'/%3E%3Ccircle cx='32' cy='32' r='19' fill='none' stroke='%23c9ff3d' stroke-width='8'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2302040a'/%3E%3Ccircle cx='32' cy='32' r='19' fill='none' stroke='%2349efff' stroke-width='8'/%3E%3C/svg%3E">
   <script>document.documentElement.classList.add('js');</script>
   <style>
     :root {
-      --ground: #050505;
-      --panel: #10110f;
-      --panel-2: #181a16;
-      --ink: #f1f0e8;
-      --muted: #a6a99e;
-      --accent: #c9ff3d;
-      --accent-cool: #67e8ff;
-      --accent-warm: #ffb15c;
-      --accent-ink: #0a0c06;
+      --ground: #02040a;
+      --panel: #070b16;
+      --panel-2: #0b1020;
+      --ink: #fff8f2;
+      --muted: #bcc5d7;
+      --accent: #49efff;
+      --accent-cool: #ff4ec8;
+      --accent-warm: #ffba6b;
+      --accent-ink: #02070c;
       --max: 1540px;
       --gutter: clamp(20px, 4vw, 64px);
       --curve: cubic-bezier(.22, 1, .36, 1);
@@ -61,10 +61,38 @@
       background: var(--ground);
     }
 
-    #ambientCanvas {
+    .ambient-void picture,
+    .ambient-void img {
       width: 100%;
       height: 100%;
-      opacity: .94;
+    }
+
+    .ambient-void picture {
+      display: block;
+    }
+
+    .ambient-void img {
+      object-fit: cover;
+      object-position: center;
+      animation: cyberpunkDrift 28s var(--curve) infinite alternate;
+    }
+
+    .ambient-void::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(1, 3, 10, .18);
+      pointer-events: none;
+    }
+
+    .noise-field {
+      position: fixed;
+      z-index: 0;
+      inset: 0;
+      opacity: .08;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
     }
 
     body.menu-open {
@@ -149,7 +177,7 @@
       justify-content: space-between;
       gap: 24px;
       padding: 0 var(--gutter);
-      background: rgba(5, 5, 5, .94);
+      background: rgba(2, 4, 10, .94);
     }
 
     .brand {
@@ -346,7 +374,7 @@
       scroll-snap-align: start;
       scroll-margin-top: 72px;
       overflow: clip;
-      background: rgba(5, 5, 5, .72);
+      background: rgba(2, 4, 10, .80);
     }
 
     .page-inner {
@@ -355,7 +383,7 @@
     }
 
     .page:nth-child(even) {
-      background: rgba(16, 17, 15, .80);
+      background: rgba(7, 10, 20, .84);
     }
 
     .display-xl {
@@ -418,7 +446,7 @@
       padding-top: 96px;
       padding-bottom: 48px;
       isolation: isolate;
-      background: rgba(5, 5, 5, .40);
+      background: rgba(2, 4, 10, .28);
     }
 
     #heroCanvas {
@@ -439,7 +467,7 @@
       width: 86vw;
       height: 86vw;
       border-radius: 50%;
-      background: var(--panel);
+      background: rgba(7, 10, 20, .34);
     }
 
     .hero-layout {
@@ -453,8 +481,18 @@
     .hero-copy {
       position: relative;
       z-index: 3;
+      isolation: isolate;
       grid-column: 1 / 7;
       max-width: 760px;
+    }
+
+    .hero-copy::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: -32px -48px -36px -36px;
+      background: rgba(2, 4, 11, .86);
+      clip-path: polygon(0 0, 100% 0, 93% 100%, 0 100%);
     }
 
     .hero-title {
@@ -563,8 +601,8 @@
       left: 2%;
       width: 180px;
       padding: 16px;
-      color: var(--accent-ink);
-      background: var(--accent);
+      color: var(--ink);
+      background: rgba(2, 4, 10, .92);
       font-family: var(--display);
       font-size: 24px;
       font-weight: 700;
@@ -697,7 +735,7 @@
     .manifesto-page {
       display: grid;
       align-content: center;
-      background: rgba(24, 26, 22, .76);
+      background: rgba(7, 10, 21, .84);
     }
 
     .manifesto-layout {
@@ -973,7 +1011,7 @@
     .loop-page {
       display: grid;
       align-content: center;
-      background: rgba(24, 26, 22, .80);
+      background: rgba(7, 10, 21, .86);
     }
 
     .loop-head {
@@ -1220,7 +1258,7 @@
     }
 
     .edge-page {
-      background: rgba(24, 26, 22, .82);
+      background: rgba(7, 10, 21, .88);
     }
 
     .edge-layout {
@@ -1649,7 +1687,7 @@
       min-height: 100svh;
       display: grid;
       align-items: center;
-      background: rgba(24, 26, 22, .75);
+      background: rgba(7, 10, 21, .84);
     }
 
     .closing-layout {
@@ -1778,6 +1816,11 @@
 
     @keyframes ringDrift {
       to { transform: rotate(360deg); }
+    }
+
+    @keyframes cyberpunkDrift {
+      from { transform: scale(1.015) translate3d(-0.5%, 0, 0); }
+      to { transform: scale(1.055) translate3d(1.2%, -1%, 0); }
     }
 
     @keyframes armShoulder {
@@ -2272,8 +2315,12 @@
 <body>
   <a class="skip-link" href="#main">跳到正文</a>
   <div class="ambient-void" aria-hidden="true">
-    <canvas id="ambientCanvas"></canvas>
+    <picture>
+      <source media="(max-width: 720px)" srcset="cyberpunk-bg-mobile.png">
+      <img src="cyberpunk-bg-desktop.png" alt="" aria-hidden="true">
+    </picture>
   </div>
+  <div class="noise-field" aria-hidden="true"></div>
 
   <header class="site-nav" aria-label="主导航">
     <a class="brand" href="#cover" aria-label="返回页面顶部">
@@ -3128,7 +3175,7 @@
       startFutureTimer();
 
       const ambientCanvas = document.getElementById("ambientCanvas");
-      const ambientContext = ambientCanvas.getContext("2d");
+      const ambientContext = ambientCanvas?.getContext("2d") || null;
       let ambientStars = [];
       let ambientWidth = 0;
       let ambientHeight = 0;
@@ -3190,6 +3237,7 @@
       };
 
       const resizeAmbientCanvas = () => {
+        if (!ambientCanvas || !ambientContext) return;
         const rect = ambientCanvas.getBoundingClientRect();
         ambientWidth = rect.width;
         ambientHeight = rect.height;
@@ -3202,6 +3250,7 @@
       };
 
       const drawAmbientField = (time) => {
+        if (!ambientContext) return;
         ambientContext.clearRect(0, 0, ambientWidth, ambientHeight);
         ambientContext.save();
         ambientContext.globalCompositeOperation = "screen";
@@ -3275,6 +3324,7 @@
       };
 
       const animateAmbientField = (time) => {
+        if (!ambientContext) return;
         if (!ambientLastFrame || time - ambientLastFrame > 36) {
           drawAmbientField(time);
           ambientLastFrame = time;
@@ -3288,6 +3338,7 @@
       };
 
       const refreshAmbientField = () => {
+        if (!ambientCanvas || !ambientContext) return;
         stopAmbientField();
         if (isReduced()) {
           drawAmbientField(0);
